@@ -52,8 +52,13 @@ public class Licence {
      * @return vrai si valide à la date d
      **/
     public boolean estValide(LocalDate d) {
-         // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        LocalDate dateFinValidite = delivrance.plusYears(1);
+        if (dateFinValidite.isBefore(d)){
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
 }

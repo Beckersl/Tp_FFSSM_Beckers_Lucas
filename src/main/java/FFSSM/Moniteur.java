@@ -4,12 +4,14 @@
 package FFSSM;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class Moniteur extends Personne {
 
     public int numeroDiplome;
+    public List<Embauche> embauche = new ArrayList<>();
 
     public Moniteur(String numeroINSEE, String nom, String prenom, String adresse, String telephone, LocalDate naissance, int numeroDiplome) {
         super(numeroINSEE, nom, prenom, adresse, telephone, naissance);
@@ -23,7 +25,21 @@ public class Moniteur extends Personne {
      */
     public Optional<Club> employeurActuel() {
          // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+//          public Optional<T> maméthode() {
+//       // Si vide pas de rerour
+//        return   Optional.empty()
+            if (embauche.isEmpty()){
+                return Optional.empty();
+            }
+            else if (embauche.get(embauche.size()-1).estTerminee()== true){
+                return Optional.empty();
+            }
+//		// sinon
+//		   return 	Optional.of("" le résultat de votre instruction ici); /
+            else {
+                return Optional.of(embauche.get(embauche.size()-1).getEmployeur());
+            }
+
     }
     
     /**
@@ -31,14 +47,25 @@ public class Moniteur extends Personne {
      * @param employeur le club employeur
      * @param debutNouvelle la date de début de l'embauche
      */
-    public void nouvelleEmbauche(Club employeur, LocalDate debutNouvelle) {   
-         // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");	    
+    public void nouvelleEmbauche(Club employeur, LocalDate debutNouvelle) {
+        if (embauche.isEmpty()){
+            embauche.add(new Embauche(debutNouvelle, this, employeur));
+        }
+        else {
+            if (embauche.get(embauche.size()-1).estTerminee()== true){
+                embauche.add(new Embauche(debutNouvelle, this, employeur));
+            }
+            else {
+            throw new UnsupportedOperationException("La dernière embauche n'est pas terminée");
+            }
+        }
     }
 
     public List<Embauche> emplois() {
-         // TODO: Implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        return embauche;
+    }
+    public Embauche getLastEmbauche(){
+        return embauche.get(embauche.size()-1);
     }
 
 }

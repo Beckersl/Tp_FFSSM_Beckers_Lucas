@@ -5,6 +5,7 @@
 package FFSSM;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Personne
 {
@@ -78,5 +79,36 @@ public class Personne
 
     public void setNaissance(LocalDate naissance) {
         this.naissance = naissance;
-    }	
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + Objects.hashCode(this.numeroINSEE);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Personne other = (Personne) obj;
+        if (!Objects.equals(this.numeroINSEE, other.numeroINSEE)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Personne{" + "numeroINSEE=" + numeroINSEE + ", nom=" + nom + ", prenom=" + prenom + ", adresse=" + adresse + ", telephone=" + telephone + ", naissance=" + naissance + '}';
+    }
+    
 }
